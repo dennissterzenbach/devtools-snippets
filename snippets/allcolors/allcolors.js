@@ -97,4 +97,54 @@
   });
   console.groupEnd("All colors used in elements on the page");
 
+  function createColorOverview(colors) {
+    let overviewElem = document.createDocumentFragment();
+    let listElem = document.createElement('ul');
+    listElem.classList.add('colorsUsed');
+
+    let styleElem = document.createElement('style');
+    styleElem.textContent = `.colorsUsed {
+        position: fixed;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+        display: flex;
+        flex-flow: row wrap;
+        padding: 1rem;
+        opacity: 0.99;
+        background: #777;
+    } 
+    .colorsUsed .colorItem {
+        display: block;
+        flex: 0 0 80px;
+        height: 80px;
+        width: 80px;
+        margin: 5px;
+        outline: 1px solid #000;
+        border: 1px solid #dadada;
+        font: console;
+    }
+    .colorsUsed .colorItem span {
+        mix-blend-mode: color-burn;
+        color: #000;
+        font-size: 16px;
+        padding: 4px;
+        display: inline-block;
+        font-family: monospace;
+    }`;
+
+    colors.forEach(color => {
+        let singleColor = document.createElement('li');
+        let span = document.createElement('span');
+        singleColor.classList.add('colorItem');
+        singleColor.style.background = span.textContent = color.key;
+        singleColor.appendChild(span);
+        listElem.appendChild(singleColor);
+    });
+
+    overviewElem.appendChild(listElem);
+    overviewElem.appendChild(styleElem);
+
+    document.body.appendChild(overviewElem);
+  }
 })();
